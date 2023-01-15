@@ -28,7 +28,9 @@ You need to place all your photos in a directory, say `Photos`. Then you put thi
         -xxxxx.jpg
         -xxxxx.jpg
     
-### Configure virtual enviroments
+### Configure Virtual Enviroments
+
+For each OS, you just need to configure this once.
 
 ```bash
 mkdir envs
@@ -43,17 +45,20 @@ cd ..
 ./envs/macos_env/bin/python -m pip install -r requirements.txt
 ```
 
-## Run Server
+### Run Server
 
 ```bash
 ./envs/macos_env/bin/python manage.py runserver 0.0.0.0:80
 ```
 
-## Create Index (only once)
+### Create Index
+
+Only need to run this once (if no new photos added)
 
 http://localhost/index_all/
 
-## Browse Your Photos
+
+## After setup
 
 http://localhost/
 
