@@ -210,3 +210,4 @@ def daypage(request, day_string):
     imgPathList = imgPathList
     imgPathList = imgPathList
     return render(request, 'daypage.html', {'imgPathList':imgPathList, 'title':day_string, 'prevDay':prev_day, 'nextDay': next_day, 'availableDates': sorted_day})
+
