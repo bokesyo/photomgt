@@ -45,7 +45,7 @@ cd ..
 ./envs/macos_env/bin/python -m pip install -r requirements.txt
 ```
 
-### Run Server
+### Start Server
 
 ```bash
 ./envs/macos_env/bin/python manage.py runserver 0.0.0.0:80
@@ -60,7 +60,16 @@ http://localhost/index_all/
 
 ## After setup
 
+### Start Server
+
+```bash
+./envs/macos_env/bin/python manage.py runserver 0.0.0.0:80
+```
+
+### Usage
+
 http://localhost/
+
 
 ## Demo
 
