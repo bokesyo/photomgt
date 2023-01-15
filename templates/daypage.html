@@ -1,0 +1,228 @@
+<html>
+    <head>
+    
+    <title>MWG Photo Manager</title>
+
+        <style>
+            /* Add styles for the modal image */
+            #modal-image {
+              display: none;
+              position: fixed;
+              z-index: 1;
+              padding-top: 0;
+              left: 0;
+              top: 0;
+              /* width: 100%; */
+              max-height: 100%;
+              max-width: 100%;
+              overflow: auto;
+              /* background-color: rgb(0,0,0); */
+              /* background-color: rgba(0,0,0,0.9); */
+            }
+
+            div {
+                background-color: white;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+                border-radius: 5px;
+                padding: 16px;
+                margin: 20px;
+            }
+
+        </style>
+
+    </head>
+
+    <div>
+      <h2 id="title">{{ title }} </h2>
+      <a href="../{{prevDay}}">Previous: {{prevDay}}</a> 
+      <a href="../{{nextDay}}">Next: {{nextDay}}</a> 
+    </div>
+
+    <div id="datepicker"></div>
+    
+    <div>
+      {% for imgPath in imgPathList %}
+          <img src="../../plist/photomgt/resources/loading.gif" data-src="../../plist/{{ imgPath }}" onclick="showImage(this)" height="200px" loading="lazy"/>
+      {% endfor %}
+    </div>
+
+    <img id="modal-image" onclick="hideImage(this)">
+
+    <script>
+        function sequentialLoad() {
+          var images = document.getElementsByTagName('img');
+          var len    = images.length;
+          var n      = 0;      //存储图片加载到的位置，避免每次都从第一张图片开始遍历		
+          return function() {
+            var seeHeight = document.documentElement.clientHeight;
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            for(var i = n; i < len; i++) {
+                if(images[i].offsetTop < seeHeight + scrollTop) {
+                    if(images[i].getAttribute('src') === "../../plist/photomgt/resources/loading.gif") {
+                      images[i].src = images[i].getAttribute('data-src');
+                    }
+                    n = n + 1;
+                }
+            }
+          }
+      }
+      var loadImages = sequentialLoad();
+      loadImages();          //初始化首页的页面图片
+      window.addEventListener('scroll', loadImages, false);
+    </script>
+
+    <script>
+      function showImage(img) {
+        var modal = document.getElementById("modal-image");
+        modal.style.display = "block";
+        modal.src = img.src;
+      }
+      
+      function hideImage() {
+        var modal = document.getElementById("modal-image");
+        modal.style.display = "none";
+      }
+    </script>
+
+    <script>
+      // Available dates to select
+      var availableDates = [];
+
+      // var availableDates = ;
+
+      // Get the current date
+      var currentDate = new Date(document.getElementById("title").innerText);
+
+      // Get the current month and year
+      var currentMonth = currentDate.getMonth();
+      var currentYear = currentDate.getFullYear();
+
+      // Create the datepicker element
+      var datepicker = document.getElementById("datepicker");
+
+      // Create the table element to hold the datepicker
+      var table = document.createElement("table");
+
+      // Create the table head to hold the month and year
+      var thead = document.createElement("thead");
+      var tr = document.createElement("tr");
+      var th1 = document.createElement("th");
+      var th2 = document.createElement("th");
+
+      // Create the buttons to navigate between months
+      var prevBtn = document.createElement("button");
+      prevBtn.innerHTML = "<";
+      prevBtn.addEventListener("click", prevMonth);
+      th1.appendChild(prevBtn);
+
+      var nextBtn = document.createElement("button");
+      nextBtn.innerHTML = ">";
+      nextBtn.addEventListener("click", nextMonth);
+      th2.appendChild(nextBtn);
+
+      tr.appendChild(th1);
+      tr.appendChild(th2);
+      thead.appendChild(tr);
+      table.appendChild(thead);
+
+      var year_text = document.createElement("a");
+      var month_text = document.createElement("a");
+      
+      datepicker.appendChild(year_text)
+      datepicker.appendChild(month_text)
+
+      // Create the table body to hold the dates
+      var tbody = document.createElement("tbody");
+      table.appendChild(tbody);
+
+      // Add the table to the datepicker element
+      datepicker.appendChild(table);
+
+      
+
+      // Function to create the calendar for a specific month and year
+      function createCalendar(month, year) {
+        year_text.innerText = String(year) + "-";
+        month_text.innerText = String(month + 1);
+        
+        // Clear the table body
+        tbody.innerHTML = "";
+
+        // Get the first day of the month
+        var firstDay = new Date(year, month, 1);
+
+        // Get the number of days in the month
+        var numDays = new Date(year, month + 1, 0).getDate();
+
+        // Get the day of the week the first day is on
+        var startDay = firstDay.getDay();
+
+        // Create the rows and cells for the calendar
+        for (var i = 0; i < 6; i++) {
+          var row = document.createElement("tr");
+          for (var j = 0; j < 7; j++) {
+            var cell = document.createElement("td");
+            var date = i * 7 + j - startDay + 1;
+            if (date > 0 && date <= numDays) {
+              cell.innerHTML = date;
+              var dateString = year +  "-" + (month + 1 < 10 ? "0" : "") + (month + 1) + "-" + (date < 10 ? "0" : "") + date;
+                // console.log(dateString);
+                if (availableDates.indexOf(dateString) === -1) {
+                  // cell.classList.add("disabled");
+                  cell.style = "color:#999999";
+                } else {
+                  cell.style = "font-weight: bold";
+                  cell.setAttribute("onclick", "window.location.href='../"+dateString+"'")
+              }
+            }
+            row.appendChild(cell);
+          }
+          tbody.appendChild(row);
+        }
+      }
+          // Function to move to the previous month
+          function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+            }
+            createCalendar(currentMonth, currentYear);
+          }
+
+          // Function to move to the next month
+          function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+            }
+            createCalendar(currentMonth, currentYear);
+          }
+
+          
+
+        fetch('../../avail_dates', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+          availableDates = data;
+
+          // Create the calendar for the current month (initial creation)
+          createCalendar(currentMonth, currentYear);
+        })
+
+      
+      
+
+
+
+
+    </script>
+
+</html>
