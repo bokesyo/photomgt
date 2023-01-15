@@ -44,14 +44,14 @@ cd ..
 ### Start Server
 
 ```bash
-./envs/mac/bin/python manage.py runserver
+./envs/mac/bin/python manage.py runserver 0.0.0.0:80
 ```
 
 ### Create Index
 
 Only need to run this once (if no new photos added)
 
-http://127.0.0.1:8001/index_all/
+http://localhost/index_all/
 
 
 ## After setup
@@ -59,12 +59,12 @@ http://127.0.0.1:8001/index_all/
 ### Start Server
 
 ```bash
-./envs/mac/bin/python manage.py runserver
+./envs/mac/bin/python manage.py runserver 0.0.0.0:80
 ```
 
 ### Usage
 
-http://127.0.0.1:8001/
+http://localhost/
 
 
 ## Demo
