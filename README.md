@@ -1,6 +1,8 @@
 # MWG Photo Manager
 
-Cross-platform photo manager with unified indexing (that means create indexing for once, you can browse your photos on any other platforms). The indexing uses relative path, don't worrry if you move photos to new devices!
+Cross-platform photo manager with unified indexing (that means create indexing for once, you can browse your photos on any other platforms or other devices). The indexing uses relative path, don't worrry if you move photos to new devices!
+
+The project is based on python. Configure your virtual environments, then enjoy using it.
 
 ## Using Scenario
 
@@ -12,8 +14,9 @@ Cross-platform photo manager with unified indexing (that means create indexing f
 
 
 
-
 ## Setup
+
+### Place this project to proper place
 
 You need to place all your photos in a directory, say `Photos`. Then you put this directory in `Photos` as well. i.e.
 
@@ -25,15 +28,25 @@ You need to place all your photos in a directory, say `Photos`. Then you put thi
         -xxxxx.jpg
         -xxxxx.jpg
     
+### Configure virtual enviroments
 
 ```bash
-pip install -r requirements.txt
+mkdir envs
+cd envs
+mkdir macos_env
+cd macos_env
+python -m venv .
+
+cd ..
+cd ..
+
+./envs/macos_env/bin/python -m pip install -r requirements.txt
 ```
 
 ## Run Server
 
 ```bash
-python manage.py runserver 0.0.0.0:80
+./envs/macos_env/bin/python manage.py runserver 0.0.0.0:80
 ```
 
 ## Create Index (only once)
