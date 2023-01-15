@@ -33,29 +33,25 @@ You need to place all your photos in a directory, say `Photos`. Then you put thi
 For each OS, you just need to configure this once.
 
 ```bash
+pip install virtualenv
 mkdir envs
 cd envs
-mkdir macos_env
-cd macos_env
-python -m venv .
-
+virtualenv mac
 cd ..
-cd ..
-
-./envs/macos_env/bin/python -m pip install -r requirements.txt
+./envs/mac/bin/python -m pip install -r requirements.txt
 ```
 
 ### Start Server
 
 ```bash
-./envs/macos_env/bin/python manage.py runserver 0.0.0.0:80
+./envs/mac/bin/python manage.py runserver
 ```
 
 ### Create Index
 
 Only need to run this once (if no new photos added)
 
-http://localhost/index_all/
+http://127.0.0.1:8001/index_all/
 
 
 ## After setup
@@ -63,12 +59,12 @@ http://localhost/index_all/
 ### Start Server
 
 ```bash
-./envs/macos_env/bin/python manage.py runserver 0.0.0.0:80
+./envs/mac/bin/python manage.py runserver
 ```
 
 ### Usage
 
-http://localhost/
+http://127.0.0.1:8001/
 
 
 ## Demo

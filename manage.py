@@ -5,6 +5,8 @@ import sys
 
 
 def main():
+    print(sys.argv)
+    
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'photomgt.settings')
     try:
@@ -15,6 +17,9 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    
+    # sys.argv = ['manage.py', 'runserver', '0.0.0.0:80']
+
     execute_from_command_line(sys.argv)
 
 
