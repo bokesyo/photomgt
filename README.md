@@ -80,3 +80,31 @@ Open `http://localhost/` and follow the guidance.
 ## Demo
 
 ![](demo.png)
+
+
+## Using Release Version
+
+1. Download release version zip file, then unzip it, you will get a folder called `photomgt-release-mac`. 
+
+2. Place it into `Photos`. 
+
+3. Run `manage`.
+
+
+<br/>
+<br/>
+<br/>
+
+## For Developers
+
+To make a release on MacOS, you need to run 
+
+```bash
+rm -rf ./dist/
+pyi-makespec -D manage.py
+pyinstaller manage.spec
+cp -r data templates ./dist/manage/
+rm -f manage.spec
+cd ./dist/
+zip -r release_macos.zip ./manage/
+```

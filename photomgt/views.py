@@ -18,7 +18,6 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 print("BASE_DIR", str(BASE_DIR))
 print("DATA_DIR", str(DATA_DIR))
 
-
 global_mapping = None
 prev_day_mapping = None
 next_day_mapping = None
