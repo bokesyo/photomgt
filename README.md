@@ -49,22 +49,14 @@ cd ..
 
 ### Create Index
 
-Only need to run this once (if no new photos added)
+Open `http://localhost/` and follow the guidance.
 
-http://localhost/index_all/
+Only need to run this once (if no new photos added)
 
 
 ## After setup
 
-### Start Server
-
-```bash
-./envs/mac/bin/python manage.py runserver 0.0.0.0:80
-```
-
-### Usage
-
-http://localhost/
+Open `http://localhost/` and follow the guidance.
 
 
 ## Demo
