@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>MWG Photo Manager</title>
+    </head>
+
+    <body>
+        <h2>
+            MWG Photo Manager
+        </h2>
+        <hr/>
+        <div>
+            <button id="myBtn" style="background-color: green; color: white; padding: 10px 20px; border-radius: 5px;">
+                Create Indexing for All
+            </button>
+              
+            <br/>
+            You don't need to run again without new photos.
+            <br/>
+            Photos in folder <strong>{{ photoBaseDir }}</strong> will be indexed.
+            <br/>
+            <strong>This procedure may take several minutes. Please wait until a finish page displayed.</strong>
+        </div>
+        <hr/>
+        <div>
+            <a href="day/{{lastDay}}/">Browse your photos by day</a>
+        </div>
+
+
+        <script>
+            var btn = document.getElementById("myBtn");
+            btn.addEventListener("click", function() {
+              btn.innerHTML = "Processing...";
+              btn.style.backgroundColor = "gray";
+              btn.disabled = true;
+              setTimeout(function(){
+                window.location.href = "index_all";
+              }, 500);
+            });
+        </script>
+
+    </body>
+</html>

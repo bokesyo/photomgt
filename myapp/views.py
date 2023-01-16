@@ -15,30 +15,35 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 PHOTO_BASE_DIR = BASE_DIR.parent
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
-print("BASE_DIR", BASE_DIR)
-print("DATA_DIR", DATA_DIR)
+print("BASE_DIR", str(BASE_DIR))
+print("DATA_DIR", str(DATA_DIR))
 
 
 global_mapping = None
-try:
-    with open(os.path.join(DATA_DIR, 'date_mapping.json'), 'r') as f:
-        global_mapping = json.load(f)
-except:
-    print("Index is not found, please run /index_all!")
-
-
 prev_day_mapping = None
 next_day_mapping = None
 sorted_day = None
-try:
-    with open(os.path.join(DATA_DIR, 'prev_day_mapping.json'), 'r') as f:
-        prev_day_mapping = json.load(f)
-    with open(os.path.join(DATA_DIR, 'next_day_mapping.json'), 'r') as f:
-        next_day_mapping = json.load(f)
-    with open(os.path.join(DATA_DIR, 'sorted_day.json'), 'r') as f:
-        sorted_day = json.load(f)
-except:
-    print("QuickNavigateData is not found, please run /create_navigate_index!")
+
+
+def load_indexing():
+    global global_mapping, prev_day_mapping, next_day_mapping, sorted_day
+    try:
+        with open(os.path.join(DATA_DIR, 'date_mapping.json'), 'r') as f:
+            global_mapping = json.load(f)
+    except:
+        print("Index is not found, please run /index_all!")
+    try:
+        with open(os.path.join(DATA_DIR, 'prev_day_mapping.json'), 'r') as f:
+            prev_day_mapping = json.load(f)
+        with open(os.path.join(DATA_DIR, 'next_day_mapping.json'), 'r') as f:
+            next_day_mapping = json.load(f)
+        with open(os.path.join(DATA_DIR, 'sorted_day.json'), 'r') as f:
+            sorted_day = json.load(f)
+    except:
+        print("QuickNavigateData is not found, please run /create_navigate_index!")
+
+
+load_indexing()
 
 
 def get_all_file_paths(directory):
@@ -92,6 +97,9 @@ def get_mapping(files_names, base_dir):
         if item[-3:] == 'jpg' or item[-4:] == 'jpeg' or item[-3:] == 'png' or item[-3:] == 'bmp':
             try:
                 image = Image.open(item)
+                h = image.height
+                w = image.width
+                ratio = w / h * 200
             except PIL.UnidentifiedImageError:
                 PIL_UnidentifiedImageError += 1
                 # 这些已经损坏 不需要索引
@@ -126,11 +134,12 @@ def get_mapping(files_names, base_dir):
         yearmd = f"{file_creat_date[0:4]}-{file_creat_date[5:7]}-{file_creat_date[8:10]}"
 
         rel_path = os.path.relpath(item, base_dir)
+        element = {"rel_path": rel_path, "ratio": ratio}
         # 添加到索引mapping
         if date_item_mapping.get(yearmd, None) is None:
-            date_item_mapping[yearmd] = [rel_path]
+            date_item_mapping[yearmd] = [element]
         else:
-            date_item_mapping[yearmd].append(rel_path)
+            date_item_mapping[yearmd].append(element)
         
         SUCCESS += 1
     
@@ -161,7 +170,9 @@ def index_all(request):
     
     create_navigate_index(request)
 
-    return HttpResponse(str(summary))
+    load_indexing()
+
+    return render(request, 'indexfinish.html', summary)
 
 
 def create_navigate_index(request):
@@ -201,13 +212,21 @@ def return_avail_dates(request):
     return JsonResponse(sorted_day, safe=False)
 
 def frontpage(request):
-    return HttpResponseRedirect(f"/day/{sorted_day[-1]}")
+    if sorted_day is None:
+        last_day = "0000-00-00"
+    else:
+        last_day = sorted_day[-1]
+    return render(request, 'frontpage.html', {'photoBaseDir': str(PHOTO_BASE_DIR), "lastDay": last_day})
 
 def daypage(request, day_string):
-    prev_day = prev_day_mapping[day_string]
-    next_day = next_day_mapping[day_string]
-    imgPathList = global_mapping[day_string]
-    imgPathList = imgPathList
-    imgPathList = imgPathList
-    return render(request, 'daypage.html', {'imgPathList':imgPathList, 'title':day_string, 'prevDay':prev_day, 'nextDay': next_day, 'availableDates': sorted_day})
+    if global_mapping is None:
+        prev_day = "0000-00-00"
+        next_day = "0000-00-00"
+        imgElementList = []
+        day_string = "No indexing found, please first create indexing"
+    else:
+        prev_day = prev_day_mapping[day_string]
+        next_day = next_day_mapping[day_string]
+        imgElementList = global_mapping[day_string]
+    return render(request, 'daypage.html', {'imgElementList':imgElementList, 'title':day_string, 'prevDay':prev_day, 'nextDay': next_day, 'availableDates': sorted_day})
 

@@ -42,35 +42,12 @@
     <div id="datepicker"></div>
     
     <div>
-      {% for imgPath in imgPathList %}
-          <img src="../../plist/photomgt/resources/loading.gif" data-src="../../plist/{{ imgPath }}" onclick="showImage(this)" height="200px" loading="lazy"/>
+      {% for imgElement in imgElementList %}
+          <img src="../../plist/{{ imgElement.rel_path }}" onclick="showImage(this)" width="{{imgElement.ratio}}" height="200px" loading="lazy"/>
       {% endfor %}
     </div>
 
     <img id="modal-image" onclick="hideImage(this)">
-
-    <script>
-        function sequentialLoad() {
-          var images = document.getElementsByTagName('img');
-          var len    = images.length;
-          var n      = 0;      //存储图片加载到的位置，避免每次都从第一张图片开始遍历		
-          return function() {
-            var seeHeight = document.documentElement.clientHeight;
-            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            for(var i = n; i < len; i++) {
-                if(images[i].offsetTop < seeHeight + scrollTop) {
-                    if(images[i].getAttribute('src') === "../../plist/photomgt/resources/loading.gif") {
-                      images[i].src = images[i].getAttribute('data-src');
-                    }
-                    n = n + 1;
-                }
-            }
-          }
-      }
-      var loadImages = sequentialLoad();
-      loadImages();          //初始化首页的页面图片
-      window.addEventListener('scroll', loadImages, false);
-    </script>
 
     <script>
       function showImage(img) {
