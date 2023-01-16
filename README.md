@@ -20,6 +20,12 @@ The project is based on python. Configure your virtual environments, then enjoy 
 <br/>
 <br/>
 
+## Demo
+
+![](demo.png)
+
+
+
 
 
 ## Codeless Usage
@@ -40,9 +46,7 @@ The project is based on python. Configure your virtual environments, then enjoy 
 <br/>
 
 
-
 ## Setup
-
 
 ### Clone this project
 
@@ -82,10 +86,6 @@ Open browser and go to `http://localhost`.
 <br/>
 <br/>
 
-
-## Demo
-
-![](demo.png)
 
 
 
