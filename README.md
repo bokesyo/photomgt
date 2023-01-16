@@ -84,4 +84,4 @@ Open `http://localhost/` and follow the guidance.
 
 ## Demo
 
-![](images/demo.png)
+![](demo.png)
