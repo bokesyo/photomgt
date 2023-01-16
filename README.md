@@ -104,7 +104,6 @@ Open browser and go to `http://localhost`.
 MacOS
 
 ```bash
-cd .
 rm -rf ./dist/
 pyi-makespec -D manage.py
 pyinstaller manage.spec
