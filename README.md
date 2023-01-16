@@ -28,7 +28,7 @@ The project is based on python. Configure your virtual environments, then enjoy 
 
 
 
-## Codeless Usage
+## Codeless usage
 
 1. Download `release_mac.zip`.
 
@@ -39,6 +39,12 @@ The project is based on python. Configure your virtual environments, then enjoy 
 4. Open to `manage` folder, find a program called `manage`. Double-click it.
 
 5. Open browser and go to `http://localhost`.
+
+
+
+## Migrate indexing data to new places or OS
+
+You only need to copy `data` folder to new places.
 
 
 <br/>
@@ -93,7 +99,7 @@ Open browser and go to `http://localhost`.
 <br/>
 <br/>
 
-## Produce a release version
+## Produce a release
 
 MacOS
 
@@ -104,6 +110,15 @@ pyi-makespec -D manage.py
 pyinstaller manage.spec
 cp -r data templates ./dist/manage/
 rm -f manage.spec
-cd ./dist/
-zip -r release_macos.zip ./manage/
+rm -rf ./build/
+```
+
+
+
+Windows
+
+```bash
+pyi-makespec -D manage.py
+pyinstaller manage.spec
+cp -r data templates ./dist/manage/
 ```
