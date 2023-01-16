@@ -20,6 +20,27 @@ The project is based on python. Configure your virtual environments, then enjoy 
 <br/>
 <br/>
 
+
+
+## Codeless Usage
+
+1. Download `release_mac.zip`.
+
+2. Put it into your `Photos` folder, which contains all of your photos.
+
+3. Unzip it, and you will find a new folder `manage`.
+
+4. Open to `manage` folder, find a program called `manage`. Double-click it.
+
+5. Open browser and go to `http://localhost`.
+
+
+<br/>
+<br/>
+<br/>
+
+
+
 ## Setup
 
 
@@ -48,28 +69,13 @@ pip install -r requirements.txt
 ```
 
 
-<br/>
-<br/>
-<br/>
-
-## Usage
-
 ### Start server
 
 ```bash
 python manage.py runserver 0.0.0.0:80
 ```
 
-### Create Index
-
-Open `http://localhost/` and follow the guidance.
-
-Only need to run this once (if no new photos added)
-
-
-### Enjoy your photos
-
-Open `http://localhost/` and follow the guidance.
+Open browser and go to `http://localhost`.
 
 
 <br/>
@@ -82,24 +88,17 @@ Open `http://localhost/` and follow the guidance.
 ![](demo.png)
 
 
-## Using Release Version
-
-1. Download release version zip file, then unzip it, you will get a folder called `photomgt-release-mac`. 
-
-2. Place it into `Photos`. 
-
-3. Run `manage`.
-
 
 <br/>
 <br/>
 <br/>
 
-## For Developers
+## Produce a release version
 
-To make a release on MacOS, you need to run 
+MacOS
 
 ```bash
+cd .
 rm -rf ./dist/
 pyi-makespec -D manage.py
 pyinstaller manage.spec
