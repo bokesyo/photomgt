@@ -4,6 +4,10 @@ Cross-platform photo manager with unified indexing (that means create indexing f
 
 The project is based on python. Configure your virtual environments, then enjoy using it.
 
+<br/>
+<br/>
+<br/>
+
 ## Using Scenario
 
 1. I am using MacOS, but I would like to open my album on Windows with `zero cost`. (no re-indexing, sync all my favorates, etc)
@@ -12,28 +16,36 @@ The project is based on python. Configure your virtual environments, then enjoy 
 
 3. I would like to move my albums to another place with `zero cost`.
 
-
+<br/>
+<br/>
+<br/>
 
 ## Setup
 
-### Place this project to proper place
 
-You need to place all your photos in a directory, say `Photos`. Then you put this directory in `Photos` as well. i.e.
+### Clone this project
 
--Photos
-    -photomgt
-    -xxxx.jpg
-    -xxxx.jpg
-    -folder1
-        -xxxxx.jpg
-        -xxxxx.jpg
-    
-### Configure Virtual Enviroments
+```bash
+git clone https://github.com/bokesyo/photomgt.git
+```
 
-For each OS, you just need to configure this once.
+### Move this project to your photo directory
+
+You need to place all your photos in a directory, say `Photos`. Then please move this directory to `Photos` as well.
+
+```bash
+mv -r photomgt /Users/xxxx/Photos
+```
+
+### Configure virtual enviroments
+
+For each OS, you just need to configure this once. Firstly you need to install python3.
+
+After installing python3, run the following commands:
 
 ```bash
 pip install virtualenv
+cd /Users/xxxx/Photos/photomgt
 mkdir envs
 cd envs
 virtualenv mac
@@ -41,7 +53,13 @@ cd ..
 ./envs/mac/bin/python -m pip install -r requirements.txt
 ```
 
-### Start Server
+<br/>
+<br/>
+<br/>
+
+## Usage
+
+### Start server
 
 ```bash
 ./envs/mac/bin/python manage.py runserver 0.0.0.0:80
@@ -54,9 +72,14 @@ Open `http://localhost/` and follow the guidance.
 Only need to run this once (if no new photos added)
 
 
-## After setup
+### Enjoy your photos
 
 Open `http://localhost/` and follow the guidance.
+
+
+<br/>
+<br/>
+<br/>
 
 
 ## Demo
