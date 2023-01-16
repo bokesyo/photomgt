@@ -39,19 +39,14 @@ mv -r photomgt /Users/xxxx/Photos
 
 ### Configure virtual enviroments
 
-For each OS, you just need to configure this once. Firstly you need to install python3.
+For each OS, you just need to configure this once. Firstly you need to install python3. Then use pip to install dependencies.
 
-After installing python3, run the following commands:
 
 ```bash
-pip install virtualenv
 cd /Users/xxxx/Photos/photomgt
-mkdir envs
-cd envs
-virtualenv mac
-cd ..
-./envs/mac/bin/python -m pip install -r requirements.txt
+pip install -r requirements.txt
 ```
+
 
 <br/>
 <br/>
@@ -62,7 +57,7 @@ cd ..
 ### Start server
 
 ```bash
-./envs/mac/bin/python manage.py runserver 0.0.0.0:80
+python manage.py runserver 0.0.0.0:80
 ```
 
 ### Create Index
