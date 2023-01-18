@@ -38,11 +38,13 @@ The project is based on python. Configure your virtual environments, then enjoy 
 
 5. Open browser and go to `http://127.0.0.1:8000`.
 
+<br/>
 
+## (Optional) Migrate to new places or new OS
 
-## Migrate indexing data to new places or OS
+If the new OS is the same with the current one, directly copy both photomgt and all the photos to new places.
 
-You only need to copy `data` folder to new places.
+If the new OS is different from the current one, just copy `data` folder, and download another distribution.
 
 
 <br/>
@@ -50,7 +52,7 @@ You only need to copy `data` folder to new places.
 <br/>
 
 
-## Setup
+## Developers
 
 ### Clone this project
 
