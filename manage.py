@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from photomgt.settings import DEFAULT_IP_PORT
 
 def main():
     print(sys.argv)
@@ -18,11 +18,10 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     
-    modified_argv = sys.argv
+    # Extend sys.argv if no more arguments given (for release version)
     if len(sys.argv) == 1:
-        modified_argv = [sys.argv[0], 'runserver', '0.0.0.0:80', '--noreload']
-    
-    execute_from_command_line(modified_argv)
+        sys.argv.extend(['runserver', DEFAULT_IP_PORT, '--noreload'])
+    execute_from_command_line(sys.argv)
 
 
 if __name__ == '__main__':

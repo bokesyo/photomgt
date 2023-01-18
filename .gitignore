@@ -4,3 +4,4 @@ envs/**
 **/._**
 build/**
 dist/**
+release/**

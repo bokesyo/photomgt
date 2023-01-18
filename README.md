@@ -30,15 +30,13 @@ The project is based on python. Configure your virtual environments, then enjoy 
 
 ## Codeless usage
 
-1. Download `release_mac.zip`.
+1. Download `release_macos.zip`.
 
-2. Put it into your `Photos` folder, which contains all of your photos.
+3. Unzip it, and you will find a folder `manage`.
 
-3. Unzip it, and you will find a new folder `manage`.
+4. Open `manage` folder, find a program called `manage`. Double-click it.
 
-4. Open to `manage` folder, find a program called `manage`. Double-click it.
-
-5. Open browser and go to `http://localhost`.
+5. Open browser and go to `http://127.0.0.1:8000`.
 
 
 
@@ -82,42 +80,6 @@ pip install -r requirements.txt
 ### Start server
 
 ```bash
-python manage.py runserver 0.0.0.0:80
+python manage.py runserver 127.0.0.1:8000
 ```
 
-Open browser and go to `http://localhost`.
-
-
-<br/>
-<br/>
-<br/>
-
-
-
-
-<br/>
-<br/>
-<br/>
-
-## Produce a release
-
-MacOS
-
-```bash
-rm -rf ./dist/
-pyi-makespec -D manage.py
-pyinstaller manage.spec
-cp -r data templates ./dist/manage/
-rm -f manage.spec
-rm -rf ./build/
-```
-
-
-
-Windows
-
-```bash
-pyi-makespec -D manage.py
-pyinstaller manage.spec
-cp -r data templates ./dist/manage/
-```

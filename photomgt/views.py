@@ -1,3 +1,4 @@
+from typing import List
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -8,9 +9,9 @@ import time
 from PIL import Image
 import PIL
 import json
+from tqdm import tqdm
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 PHOTO_BASE_DIR = BASE_DIR.parent
 DATA_DIR = os.path.join(BASE_DIR, 'data')
@@ -47,9 +48,12 @@ load_indexing()
 
 def get_all_file_paths(directory):
     file_paths = []
+    exclude = str(BASE_DIR)
     for dirpath, dirnames, filenames in os.walk(directory):
         for filename in filenames:
-            file_paths.append(os.path.join(dirpath, filename))
+            abs_path = os.path.join(dirpath, filename)
+            if exclude not in abs_path:
+                file_paths.append(abs_path)
     return file_paths
 
 
@@ -81,16 +85,20 @@ def get_mapping(files_names, base_dir):
     No_EXIF = 0
     DateValueError = 0
 
+    pbar = tqdm(total=len(files_names))
+
     for item in files_names:
-        if SUCCESS % 1000 == 0:
-            print("UnidentifiedImageError", PIL_UnidentifiedImageError)
-            print("EXIF_AttributeError", EXIF_AttributeError)
-            print("EXIF_KeyError", EXIF_KeyError)
-            print("SUCCESS", SUCCESS)
-            print("No_EXIF", No_EXIF)
-            print("EXIF_TypeError", EXIF_TypeError)
-            print("DateValueError", DateValueError)
-            print('-------')
+        # if SUCCESS % 1000 == 0:
+        #     print("UnidentifiedImageError", PIL_UnidentifiedImageError)
+        #     print("EXIF_AttributeError", EXIF_AttributeError)
+        #     print("EXIF_KeyError", EXIF_KeyError)
+        #     print("SUCCESS", SUCCESS)
+        #     print("No_EXIF", No_EXIF)
+        #     print("EXIF_TypeError", EXIF_TypeError)
+        #     print("DateValueError", DateValueError)
+        #     print('-------')
+        
+        pbar.update(1)
         
         # 定义需要整理的文件格式，支持以下几种格式的照片
         if item[-3:] == 'jpg' or item[-4:] == 'jpeg' or item[-3:] == 'png' or item[-3:] == 'bmp':
@@ -142,6 +150,8 @@ def get_mapping(files_names, base_dir):
         
         SUCCESS += 1
     
+    pbar.close()
+    
     summary = {
         "PIL_UnidentifiedImageError": PIL_UnidentifiedImageError,
         "SUCCESS": SUCCESS,
@@ -160,8 +170,11 @@ def index_all(request):
     进行全面索引
     """
     abs_file_paths = get_all_file_paths(PHOTO_BASE_DIR)
+    abs_file_paths = [str(x) for x in abs_file_paths]
+
     # print(abs_file_paths[:100])
     date_mapping, summary = get_mapping(abs_file_paths, PHOTO_BASE_DIR)
+
     outfile = os.path.join(DATA_DIR, 'date_mapping.json')
     print(summary)
     with open(outfile, 'w') as f:
